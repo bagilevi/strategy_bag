@@ -1,5 +1,10 @@
 # StrategyBag
 
+[![Gem Version](https://badge.fury.io/rb/strategy_bag.png)](http://badge.fury.io/rb/strategy_bag)
+[![Build Status](https://travis-ci.org/bagilevi/strategy_bag.png)](https://travis-ci.org/bagilevi/strategy_bag)
+[![Code Climate](https://codeclimate.com/github/bagilevi/strategy_bag.png)](https://codeclimate.com/github/bagilevi/strategy_bag)
+
+
 Ruby DSL for making conditionals more readable by defining a set of strategies. Each strategy has a set of conditions and an action. The runner will select a strategy that meets the conditions and executes it.
 
 ## Installation
