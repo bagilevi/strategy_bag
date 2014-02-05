@@ -75,7 +75,7 @@ class StrategyBag
       self.conditions << [positive_name, negative_name, p]
     end
 
-    def strategy(&block)
+    def strategy(title = nil, &block)
       self.strategies ||= []
       strategy = Strategy.new
       strategy.instance_eval(&block)

@@ -18,7 +18,7 @@ module StrategicCalc
     condition(:c_max?, :c_not_max?) { c > 20 }
     condition(:bc_high?, :bc_low?) { bc > 10 }
 
-    strategy do
+    strategy "all high" do
       condition :a_high?
       condition :b_high?
       condition :c_high?
