@@ -11,13 +11,18 @@ module StrategicCalc
     20
   end
 
+  def b_limit
+    10
+  end
+
   class Solver < StrategyBag
     params :a, :b, :c
 
     derive(:bc) { b + c }
+    derive(:b_high) { b > b_limit }
 
     condition(:a_high?, :a_low?) { a > 10 }
-    condition(:b_high?, :b_low?) { b > 10 }
+    condition(:b_high?, :b_low?) { b_high }
     condition(:c_high?, :c_low?) { c > 10 }
     condition(:c_max?, :c_not_max?) { c > cmax } # cmax is provided by the interface
     condition(:bc_high?, :bc_low?) { bc > 10 }
