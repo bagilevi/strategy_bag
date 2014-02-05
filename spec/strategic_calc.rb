@@ -10,11 +10,13 @@ module StrategicCalc
   class Solver < StrategyBag
     params :a, :b, :c
 
+    derive(:bc) { b + c }
+
     condition(:a_high?, :a_low?) { a > 10 }
     condition(:b_high?, :b_low?) { b > 10 }
     condition(:c_high?, :c_low?) { c > 10 }
     condition(:c_max?, :c_not_max?) { c > 20 }
-    condition(:bc_high?, :bc_low?) { b + c > 10 }
+    condition(:bc_high?, :bc_low?) { bc > 10 }
 
     strategy do
       condition :a_high?

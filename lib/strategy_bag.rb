@@ -8,6 +8,9 @@ class StrategyBag
   end
 
   def run
+    self.class.derived_attributes.each do |name, block|
+      @evaluator.define_func name, block
+    end
     self.class.conditions.each do |positive_name, negative_name, p|
       @evaluator.define_func positive_name, p
       @evaluator.define_negative negative_name, positive_name
@@ -60,7 +63,7 @@ class StrategyBag
   end
 
   module ClassDSL
-    attr_accessor :param_names, :conditions, :strategies, :default_strategy
+    attr_accessor :param_names, :conditions, :strategies, :default_strategy, :derived_attributes
 
     def params(*param_names)
       self.param_names = param_names
@@ -82,6 +85,12 @@ class StrategyBag
     def default(&block)
       self.default_strategy = block
     end
+
+    def derive(name, &block)
+      self.derived_attributes ||= []
+      self.derived_attributes << [name, block]
+    end
+
   end
 
   extend ClassDSL
