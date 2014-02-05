@@ -1,9 +1,14 @@
 class StrategyBag
 
   def initialize(*args)
+    interface, *param_values = args
+    if param_values.size != self.class.param_names.size
+      raise ArgumentError, "expected params: interface, #{self.class.param_names.map(&:to_s).join(', ')}, but only #{args.size} params given"
+    end
     @evaluator = Evaluator.new
+    @evaluator.interface = interface
     self.class.param_names.each_with_index do |name, index|
-      @evaluator.define_value name, args[index]
+      @evaluator.define_value name, param_values[index]
     end
   end
 
@@ -30,6 +35,8 @@ class StrategyBag
 
 
   class Evaluator
+    attr_accessor :interface
+
     def initialize
       @table = {}
     end
@@ -52,10 +59,12 @@ class StrategyBag
       a.all? { |c| send(c) }
     end
 
-    def method_missing(m, *args, &proc)
+    def method_missing(m, *args, &block)
       #puts "missing: #{m}"
       if @table.has_key?(m.to_sym) && args.empty?
         @table[m.to_sym]
+      elsif interface.respond_to?(m)
+        interface.public_send(m, *args, &block)
       else
         super
       end

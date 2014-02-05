@@ -4,7 +4,11 @@ module StrategicCalc
   extend self
 
   def calc(a, b, c)
-    Solver.new(a, b, c).run
+    Solver.new(self, a, b, c).run
+  end
+
+  def cmax
+    20
   end
 
   class Solver < StrategyBag
@@ -15,7 +19,7 @@ module StrategicCalc
     condition(:a_high?, :a_low?) { a > 10 }
     condition(:b_high?, :b_low?) { b > 10 }
     condition(:c_high?, :c_low?) { c > 10 }
-    condition(:c_max?, :c_not_max?) { c > 20 }
+    condition(:c_max?, :c_not_max?) { c > cmax } # cmax is provided by the interface
     condition(:bc_high?, :bc_low?) { bc > 10 }
 
     strategy "all high" do
